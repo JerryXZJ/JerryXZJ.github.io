@@ -3,19 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的博客</title>
+  <title>我的AI博客</title>
   <style>
     body {
       margin: 0;
       font-family: 'Courier New', Courier, monospace;
-      background-color: #ffffff;
-      color: #111;
+      background: #000;
+      overflow: hidden;
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
       text-align: center;
+      position: relative;
+    }
+
+    .stars {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: transparent;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    h1, p, nav, footer {
+      position: relative;
+      z-index: 1;
     }
 
     h1 {
@@ -27,38 +60,51 @@
       font-size: 1.2rem;
       max-width: 600px;
       margin-bottom: 2rem;
-      color: #555;
+      color: #ccc;
     }
 
     nav a {
       margin: 0 1rem;
       text-decoration: none;
-      color: #007acc;
+      color: #66ccff;
       font-weight: bold;
       transition: color 0.3s ease;
     }
 
     nav a:hover {
-      color: #005f99;
+      color: #3399cc;
     }
 
     footer {
       position: absolute;
       bottom: 1rem;
       font-size: 0.9rem;
-      color: #aaa;
+      color: #888;
     }
   </style>
 </head>
 <body>
+  <div class="stars" id="stars"></div>
   <h1>你好，我是 Jerry</h1>
-  <p>欢迎来到我的技术博客，这里记录我的开发笔记与学习心得。</p>
+  <p>欢迎来到我的博客！我是一名 AI 爱好者，专注于人工智能、机器学习与前沿技术的探索。</p>
   <nav>
     <a href="#">博客</a>
     <a href="#">关于我</a>
     <a href="https://github.com/你的GitHub账号" target="_blank">GitHub</a>
   </nav>
 
-  <footer>© 2025 Jerry 的博客</footer>
+  <footer>© 2025 Jerry 的 AI 博客</footer>
+
+  <script>
+    const starContainer = document.getElementById('stars');
+    for (let i = 0; i < 150; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.animationDuration = `${1 + Math.random() * 3}s`;
+      starContainer.appendChild(star);
+    }
+  </script>
 </body>
 </html>
