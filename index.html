@@ -3,14 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的AI博客</title>
+  <title>Jerry's AI Blog</title>
   <style>
+    :root {
+      --bg-color: #000;
+      --text-color: #fff;
+      --subtext-color: #ccc;
+      --link-color: #66ccff;
+      --link-hover: #3399cc;
+    }
+
+    body.light {
+      --bg-color: #f0f0f0;
+      --text-color: #111;
+      --subtext-color: #444;
+      --link-color: #007acc;
+      --link-hover: #005f99;
+    }
+
     body {
       margin: 0;
       font-family: 'Courier New', Courier, monospace;
-      background: #000;
+      background: var(--bg-color);
+      color: var(--text-color);
       overflow: hidden;
-      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -18,6 +34,7 @@
       height: 100vh;
       text-align: center;
       position: relative;
+      transition: background 0.5s, color 0.5s;
     }
 
     .stars {
@@ -29,6 +46,7 @@
       background: transparent;
       overflow: hidden;
       z-index: 0;
+      pointer-events: none;
     }
 
     .star {
@@ -46,7 +64,7 @@
       50% { opacity: 1; }
     }
 
-    h1, p, nav, footer {
+    h1, p, nav, footer, .controls {
       position: relative;
       z-index: 1;
     }
@@ -60,19 +78,19 @@
       font-size: 1.2rem;
       max-width: 600px;
       margin-bottom: 2rem;
-      color: #ccc;
+      color: var(--subtext-color);
     }
 
     nav a {
       margin: 0 1rem;
       text-decoration: none;
-      color: #66ccff;
+      color: var(--link-color);
       font-weight: bold;
       transition: color 0.3s ease;
     }
 
     nav a:hover {
-      color: #3399cc;
+      color: var(--link-hover);
     }
 
     footer {
@@ -81,21 +99,55 @@
       font-size: 0.9rem;
       color: #888;
     }
+
+    .controls {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+
+    .controls button {
+      margin-left: 10px;
+      padding: 6px 10px;
+      background: transparent;
+      border: 1px solid var(--text-color);
+      color: var(--text-color);
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .controls button:hover {
+      background: var(--text-color);
+      color: var(--bg-color);
+    }
   </style>
 </head>
 <body>
   <div class="stars" id="stars"></div>
-  <h1>Hello,You can call me Jerry</h1>
-  <p>Welcome to my personal website! I'm an AI enthusiast, Focused on exploring artificial intelligence, machine learning, and cutting-edge technologies.</p>
+
+  <div class="controls">
+    <button id="langToggle">中文</button>
+    <button id="themeToggle">☀️</button>
+  </div>
+
+  <h1 data-en="Hello, You can call me Jerry" data-zh="你好，我是 Jerry">Hello, You can call me Jerry</h1>
+  <p data-en="Welcome to my personal website! I'm an AI enthusiast, focused on exploring artificial intelligence, machine learning, and cutting-edge technologies." 
+     data-zh="欢迎来到我的个人网站！我是一名 AI 爱好者，专注于人工智能、机器学习与前沿技术的探索。">
+     Welcome to my personal website! I'm an AI enthusiast, focused on exploring artificial intelligence, machine learning, and cutting-edge technologies.
+  </p>
   <nav>
-    <a href="#">Document</a>
-    <a href="#">About me</a>
+    <a href="#" data-en="Document" data-zh="博客">Document</a>
+    <a href="#" data-en="About me" data-zh="关于我">About me</a>
     <a href="https://github.com/你的GitHub账号" target="_blank">GitHub</a>
   </nav>
 
-  <footer>© 2025 Jerry's AI website</footer>
+  <footer data-en="© 2025 Jerry's AI website" data-zh="© 2025 Jerry 的 AI 网站">
+    © 2025 Jerry's AI website
+  </footer>
 
   <script>
+    // 星星生成
     const starContainer = document.getElementById('stars');
     for (let i = 0; i < 150; i++) {
       const star = document.createElement('div');
@@ -105,6 +157,25 @@
       star.style.animationDuration = `${1 + Math.random() * 3}s`;
       starContainer.appendChild(star);
     }
+
+    // 中英文切换
+    const langToggle = document.getElementById('langToggle');
+    let isEnglish = true;
+    langToggle.addEventListener('click', () => {
+      isEnglish = !isEnglish;
+      langToggle.textContent = isEnglish ? '中文' : 'English';
+
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = el.getAttribute(isEnglish ? 'data-en' : 'data-zh');
+      });
+    });
+
+    // 黑白主题切换
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      themeToggle.textContent = document.body.classList.contains('light') ? '🌙' : '☀️';
+    });
   </script>
 </body>
 </html>
